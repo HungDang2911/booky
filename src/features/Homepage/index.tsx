@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavBar } from '../common/NavBar';
-import { Trailers } from './Trailers';
+import { Trailers } from './Trailers/Trailers';
 
 interface Props {
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TrailersSlider } from "./MovieSlider/TrailersSlider";
+import "./Trailers.scss";
 
 interface Props {}
 
