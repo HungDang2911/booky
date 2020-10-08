@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TrailersSlider } from "./MovieSlider/TrailersSlider";
+import { Playlist } from "./Playlist/Playlist";
 import "./Trailers.scss";
 
 interface Props {}
@@ -7,39 +7,49 @@ interface Props {}
 export const Trailers = (props: Props) => {
   const [trailersList, setTrailerList] = useState([
     {
+      id: "TcMBFSGVi1c",
       name: "Avengers: Endgame",
-      link:
-        "https://www.youtube.com/watch?v=TcMBFSGVi1c&t=3s&ab_channel=MarvelEntertainment",
     },
     {
+      id: "6ZfuNTqbHE8",
       name: "Avengers: Infinity War",
-      link:
-        "https://www.youtube.com/watch?v=6ZfuNTqbHE8&t=16s&ab_channel=MarvelEntertainment",
     },
     {
+      id: "tmeOjFno6Do",
       name: "Avengers: Age of Ultron",
-      link:
-        "https://www.youtube.com/watch?v=tmeOjFno6Do&t=34s&ab_channel=MarvelEntertainment",
     },
   ]);
-  const [currentPlaying, setCurrentPlaying] = useState("");
+  const [currentPlaying, setCurrentPlaying] = useState("TcMBFSGVi1c");
 
   useEffect(() => {}, []);
 
+  const getNextTrailer = () => {};
+
+  const getPreviousTrailer = () => {};
+
+  const getTrailer = (trailerId: string) => {
+    setCurrentPlaying(trailerId);
+  };
+
   return (
-    <div className="container in-theater">
+    <div className="container trailers">
       <h2>In theater</h2>
-      <div className="flex-column flex-lg-row">
+      <div className="d-flex">
         <iframe
+          height="441px"
           title="current-playing"
-          src="https://www.youtube.com/embed/QwievZ1Tx-8"
+          src={`https://www.youtube.com/embed/${currentPlaying}`}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
+          className="trailers__current-playing"
         />
-        <TrailersSlider
+        <Playlist
           currentPlaying={currentPlaying}
           trailersList={trailersList}
+          getNextTrailer={getNextTrailer}
+          getPreviousTrailer={getPreviousTrailer}
+          getTrailer={getTrailer}
         />
       </div>
     </div>

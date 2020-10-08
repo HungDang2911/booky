@@ -5,7 +5,7 @@ interface Props {}
 
 export const NavBar = (props: Props) => {
   return (
-    <div>
+    <div className="container">
       <SearchBar />
     </div>
   );
