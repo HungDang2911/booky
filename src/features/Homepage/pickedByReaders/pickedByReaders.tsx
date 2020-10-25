@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookCard } from './bookCard/BookCard';
+import { BookCard } from './BookCard/BookCard';
 
 interface Props {}
 
@@ -34,7 +34,7 @@ export const PickedByReaders = (props: Props) => {
 
   return (
     <div className="d-flex flex-row">
-      <h2>The ReadDown</h2>
+      <h2>Picked by Readers</h2>
       {books.map((book) => (
         <BookCard key={book.id} book={book} />
       ))}
