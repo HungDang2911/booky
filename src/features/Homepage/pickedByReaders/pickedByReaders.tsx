@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookCard } from './BookCard/BookCard';
+import './PickedByReaders.scss';
 
 interface Props {}
 
@@ -33,11 +33,26 @@ export const PickedByReaders = (props: Props) => {
   ]);
 
   return (
-    <div className="d-flex flex-row">
+    <div>
       <h2>Picked by Readers</h2>
-      {books.map((book) => (
-        <BookCard key={book.id} book={book} />
-      ))}
+      <div className="d-flex flex-row flex-wrap justify-content-between">
+        {books.map((book) => (
+          <div className="picked-by-readers__book-card">
+            <img
+              src={book.imgLink}
+              alt={book.name}
+              className="picked-by-readers__book-card__img img-fluid"
+            />
+            <p className="picked-by-readers__book-card__name">{book.name}</p>
+            <p className="picked-by-readers__book-card__author">
+              {book.author}
+            </p>
+            <p className="picked-by-readers__book-card__reviews">
+              {book.reviews}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
