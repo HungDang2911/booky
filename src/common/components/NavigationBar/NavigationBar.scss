@@ -1,0 +1,21 @@
+.navbar {
+  min-height:100px;
+  text-transform: uppercase;
+
+  &-brand {
+    font-size: 40px;
+  }
+
+}
+
+.nav-link {
+  font-weight: 600;
+  color: black !important;
+  
+  transition: .3s;
+
+  &:hover {
+    color: red !important;
+    border-bottom: 2px solid red;
+  }
+}

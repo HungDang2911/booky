@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
+import { Container } from 'reactstrap';
+import { Book } from '../../../models/Book';
 import './PickedByReaders.scss';
 
 interface Props {}
 
-export interface Book {
-  id: number;
-  imgLink: string;
-  name: string;
-  author: string;
-  rating: number;
-  reviews: number;
-}
-
 export const PickedByReaders = (props: Props) => {
   const mockBook: Book = {
-    id: 1,
+    _id: '',
     imgLink:
       'https://images-na.ssl-images-amazon.com/images/I/51X7dEUFgoL._AC_SY400_.jpg',
     name: 'How to win friends & influence people',
+    price: 0,
     author: 'Dale Carnegie',
     rating: 5.0,
     reviews: 0,
@@ -33,26 +27,35 @@ export const PickedByReaders = (props: Props) => {
   ]);
 
   return (
-    <div>
-      <h2>Picked by Readers</h2>
-      <div className="d-flex flex-row flex-wrap justify-content-between">
+    <Container>
+      <h2 className="homepage__header playfair text-center">
+        <i>Picked</i> by Readers
+      </h2>
+      <hr className="homepage__header__underline" />
+      <div className="row">
         {books.map((book) => (
-          <div className="picked-by-readers__book-card">
-            <img
-              src={book.imgLink}
-              alt={book.name}
-              className="picked-by-readers__book-card__img img-fluid"
-            />
-            <p className="picked-by-readers__book-card__name">{book.name}</p>
-            <p className="picked-by-readers__book-card__author">
+          <div className="picked-by-readers__book-card col-12 col-sm-6 col-md-2 text-center px-2">
+            <div className="picked-by-readers__book-card__img-wrapper">
+              <img
+                src={book.imgLink}
+                alt={book.name}
+                className="picked-by-readers__book-card__img img-fluid"
+              />
+              <div className="picked-by-readers__book-card__img-layer" />
+            </div>
+
+            <p className="picked-by-readers__book-card__name mt-4">
+              {book.name}
+            </p>
+            <p className="picked-by-readers__book-card__author mb-1">
               {book.author}
             </p>
             <p className="picked-by-readers__book-card__reviews">
-              {book.reviews}
+              {book.reviews} Reviews
             </p>
           </div>
         ))}
       </div>
-    </div>
+    </Container>
   );
 };

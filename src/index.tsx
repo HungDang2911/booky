@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
 import store from './app/store';
@@ -14,7 +15,7 @@ const render = () => {
         <App />
       </Provider>
     </React.StrictMode>,
-    document.getElementById('root')
+    $('#root')[0]
   );
 };
 

@@ -1,13 +1,18 @@
 import React from 'react';
-import { Container } from 'reactstrap';
+import './index.scss';
+import { Discover } from './Discover/Discover';
 import { PickedByReaders } from './PickedByReaders/PickedByReaders';
+import { NavigationBar } from '../../common/components/NavigationBar/NavigationBar';
+
 
 interface Props {}
 
 export const HomePage = (props: Props) => {
   return (
-    <Container>
+    <div>
+      <NavigationBar />
+      <Discover />
       <PickedByReaders />
-    </Container>
+    </div>
   );
 };

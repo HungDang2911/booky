@@ -1,4 +1,4 @@
-.picked-by-readers{
+.discover{
   &__book-card{
     padding: 0;
     margin: 0 auto;
@@ -19,8 +19,10 @@
       color: #797979;
     }
 
-    &__reviews{
-      text-decoration: underline;
+    &__price{
+      color: #de3241;
+      font-weight: bold;
+      font-size: 18px;
     }
   }
 }
