@@ -1,0 +1,88 @@
+.book-detail {
+  &__img-wrapper {
+    flex: 3;
+  }
+
+  &__img {
+    width: 100%;
+  }
+
+  &__info {
+    flex: 7;
+  }
+
+  &__price {
+    color: #de3241;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  &__add-to-cart {
+
+    &__number {
+      height: 40px;
+      width: 80px;
+      background-color: #f5f5f4;
+      border-radius: 3px;
+      transition: 0.3s;
+
+      &:hover {
+        border: 1px solid black;
+      }
+
+      &:focus {
+        border: 1px solid #de3241;
+      }
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+
+    &__increase-btn,
+    &__increase-btn:focus,
+    &__decrease-btn,
+    &__decrease-btn:focus {
+      width: 25px;
+      height: 20px;
+      background-color: #de3241;
+      line-height: 20px;
+      color: #fff;
+      font-size: 12px;
+      outline: none;
+      right: 0;
+    }
+
+    &__increase-btn {
+      top: 0;
+    }
+
+    &__decrease-btn {
+      top: 20px;
+    }
+
+    &__add-btn {
+      width: 150px;
+      height: 40px;
+      border-radius: 3px;
+      background-color: #de3241;
+      outline: none;
+      color: #fff;
+      font-weight: 600;
+
+      &:focus {
+        outline: none;
+      }
+
+      &:hover {
+        background-color: #b52733;
+      }
+    }
+  }
+
+  &__meta {
+    color: #797979;
+  }
+}

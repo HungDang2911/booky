@@ -5,6 +5,7 @@ import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import store from './app/store';
 
+
 const render = () => {
   const App = require('./app/App').default;
 
