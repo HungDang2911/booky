@@ -1,12 +1,12 @@
 import React from 'react';
-import "./App.scss";
-import "../common/styles/common.scss";
-import { Router } from './router';
+import '../common/styles/common.scss';
+
+import { Routes } from './routes';
 
 function App() {
   return (
     <div className="App">
-      <Router />
+      <Routes />
     </div>
   );
 }
