@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Book } from "../../models/Book";
 
 interface CartState {
-  books: Map<Book, Number>;
+  books: Object;
 }
 
 const initialState: CartState = {
-  books: new Map(),
+  books: {},
 };
 
 const cartSlice = createSlice({
@@ -14,16 +14,13 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addBook(state, action) {
-      state.books.set(
-        action.payload.book,
-        action.payload.numOfBooks + state.books.get(action.payload.book)
-      );
+      
     },
     removeBook(state, action) {
-      state.books.delete(action.payload);
+      delete state.books[action.payload._id]
     },
     removeAllBook(state) {
-      state.books.clear();
+      state.books = {}
     },
   },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.scss';
 import { Discover } from './Discover/Discover';
-import { PickedByReaders } from './pickedByReaders/PickedByReaders';
+import { PickedByReaders } from './PickedByReaders/PickedByReaders';
 import { NavigationBar } from '../../common/components/NavigationBar/NavigationBar';
 
 
