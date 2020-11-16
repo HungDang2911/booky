@@ -1,0 +1,36 @@
+.description-n-reviews {
+  &__switch-btn-group {
+    & button {
+      width: 15%;
+      min-width: 150px;
+      height: 3.5vw;
+      min-height: 35px;
+      outline: none;
+
+      font-weight: 550;
+    }
+
+    &__active-btn {
+      background-color: #de3241;
+      color: #fff;
+    }
+
+    &__not-active-btn {
+      background-color: #f5f5f4;
+      transition: .3s;
+
+      &:hover {
+        color: #de3241;
+      }
+    }
+  }
+
+  &__description,
+  &__reviews {
+    background-color: #f5f5f4;
+    & p {
+      color: #797979;
+    }
+  }
+
+}

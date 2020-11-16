@@ -1,40 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Container } from "reactstrap";
 import { BookDetail } from "../../../models/BookDetail";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import "./Details.scss";
-import { getBookById } from "../../../api/bookAPI";
 import { useDispatch } from "react-redux";
 import { addBook } from "../../Cart/cartSlice";
 
-export const Details = () => {
-  const [book, setBook] = useState<BookDetail>({
-    _id: "",
-    imgLink: "",
-    name: "",
-    categories: [],
-    price: -1,
-    author: "",
-    rating: 0,
-    reviews: 0,
-  });
+interface Props {
+  book: BookDetail;
+}
 
+export const Details = (props: Props) => {
   const [numOfBooks, setNumOfBooks] = useState(1);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchBook = async () => {
-      const response = await getBookById("5f9d90741445af2e1c3c5aa8");
-      setBook(response.data);
-    };
-
-    fetchBook();
-  }, []);
-
   const handleAddToCart = () => {
-    dispatch(addBook({ book, numOfBooks }));
+    if (numOfBooks >= 1) dispatch(addBook({ book: props.book, numOfBooks }));
   };
 
   const handleNumOfBookChange = (event: any) => {
@@ -51,17 +34,17 @@ export const Details = () => {
 
   return (
     <Container>
-      <div className="book-detail d-flex flex-column flex-sm-row">
+      <div className="book-detail my-5 d-flex flex-column flex-sm-row">
         <div className="book-detail__img-wrapper mr-sm-5">
           <img
             className="book-detail__img"
-            src={book.imgLink}
-            alt={book.name}
+            src={props.book.imgLink}
+            alt={props.book.name}
           />
         </div>
         <div className="book-detail__info">
-          <h1 className="playfair">{book.name}</h1>
-          <p className="book-detail__price">${book.price}</p>
+          <h1 className="playfair">{props.book.name}</h1>
+          <p className="book-detail__price">${props.book.price}</p>
           <div className="book-detail__add-to-cart">
             <div className="d-inline-block position-relative">
               <input
@@ -93,7 +76,7 @@ export const Details = () => {
           </div>
           <hr />
           <p className="book-detail__meta">
-            Categories: {book.categories.join(", ")}
+            Categories: {props.book.categories.join(", ")}
           </p>
         </div>
       </div>

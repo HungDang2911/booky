@@ -5,6 +5,7 @@ export interface BookDetail {
   name: string;
   price: number;
   author: string;
+  description: string;
   rating: number;
-  reviews: number;
+  reviews: [];
 }
