@@ -1,46 +1,49 @@
-import React, { useState } from "react";
-import Rating from "react-rating";
-import { Container } from "reactstrap";
-import { BookDetail } from "../../../models/BookDetail";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./DescriptionNReviews.scss";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
+import React, { useState } from 'react';
+import Rating from 'react-rating';
+import { Container } from 'reactstrap';
+import { BookDetail } from '../../../models/BookDetail';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './DescriptionNReviews.scss';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import { Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
 
 export interface Props {
   book: BookDetail;
+  reload: () => void;
 }
 
 const SCREENS = {
-  DESCRIPTION: "DESCRIPTION",
-  REVIEWS: "REVIEWS",
+  DESCRIPTION: 'DESCRIPTION',
+  REVIEWS: 'REVIEWS',
 };
 
 export function DescriptionNReviews(props: Props) {
   const [currentScreen, setCurrentScreen] = useState(SCREENS.DESCRIPTION);
 
-  //form states
-  const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
 
-
-  //Handle form
-  const handleReviewChange = (value: string) => {
-    setReview(value);
+  //initial form values
+  const initialFormValues = {
+    review: '',
+    rating: 0,
+    name: '',
+    email: '',
   };
 
-  const handleRatingChange = (value: number) => {
-    setRating(value);
-  };
+  //validation schema
 
-  const handleNameChange = (value: string) => {
-    setName(value);
-  };
+  const validationSchema = Yup.object().shape({
+    review: Yup.string(),
+    rating: Yup.number(),
+    name: Yup.string(),
+    email: Yup.string()
+  });
 
-  const handleEmailChange = (value: string) => {
-    setEmail(value);
+  const handleSubmit = (values: any) => {
+    console.log(values)
+    props.reload();
   };
 
   return (
@@ -50,8 +53,8 @@ export function DescriptionNReviews(props: Props) {
           <button
             className={`playfair ${
               currentScreen === SCREENS.DESCRIPTION
-                ? "description-n-reviews__switch-btn-group__active-btn"
-                : "description-n-reviews__switch-btn-group__not-active-btn"
+                ? 'description-n-reviews__switch-btn-group__active-btn'
+                : 'description-n-reviews__switch-btn-group__not-active-btn'
             }`}
             onClick={() => setCurrentScreen(SCREENS.DESCRIPTION)}
           >
@@ -60,8 +63,8 @@ export function DescriptionNReviews(props: Props) {
           <button
             className={`playfair ${
               currentScreen === SCREENS.REVIEWS
-                ? "description-n-reviews__switch-btn-group__active-btn"
-                : "description-n-reviews__switch-btn-group__not-active-btn"
+                ? 'description-n-reviews__switch-btn-group__active-btn'
+                : 'description-n-reviews__switch-btn-group__not-active-btn'
             }`}
             onClick={() => setCurrentScreen(SCREENS.REVIEWS)}
           >
@@ -88,24 +91,65 @@ export function DescriptionNReviews(props: Props) {
               Your email address will not be published. Required fields are
               marked *
             </p>
-            <p>Your rating *</p>
-            <Rating
-              emptySymbol={<FontAwesomeIcon icon={farStar} />}
-              fullSymbol={<FontAwesomeIcon icon={faStar} />}
-              onChange={handleRatingChange}
-            />
-            <p>Your review *</p>
-            <textarea className="" cols={45} rows={8} />
-            <div>
-              <label>
-                Name* <input type="text" onChange={handleNameChange} />
-              </label>
-            </div>
-            <div>
-              <label>
-                Email* <input type="text" onChange={handleEmailChange} />
-              </label>
-            </div>
+            <Formik
+              initialValues={initialFormValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {() => {
+                return (
+                  <Form>
+                    <p>Your rating *</p>
+                    <Field name="rating" type="number">
+                      {() => (
+                        <Rating
+                          initialRating={rating}
+                          className="description-n-reviews__reviews__rating"
+                          emptySymbol={<FontAwesomeIcon icon={farStar} />}
+                          fullSymbol={<FontAwesomeIcon icon={faStar} />}
+                        />
+                      )}
+                    </Field>
+                    <p>Your review *</p>
+                    <Field
+                      as="textarea"
+                      className="description-n-reviews__reviews__input-review"
+                      cols={45}
+                      rows={8}
+                      name="review"
+                    />
+                    <div>
+                      <label>
+                        <span>Name*</span>
+                        <Field
+                          className="description-n-reviews__reviews__input-name"
+                          type="text"
+                          name="name"
+                        />
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        <span>Email*</span>
+                        <Field
+                          className="description-n-reviews__reviews__input-email"
+                          type="text"
+                          name="email"
+                        />
+                      </label>
+                    </div>
+                    <div>
+                      <button
+                        type="submit"
+                        className="description-n-reviews__reviews__submit-btn ml-2"
+                      >
+                        SUBMIT
+                      </button>
+                    </div>
+                  </Form>
+                )
+              }}
+            </Formik>
           </div>
         )}
       </div>

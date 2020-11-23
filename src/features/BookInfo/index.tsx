@@ -21,6 +21,8 @@ export const BookInfo = (props: Props) => {
     reviews: [],
   });
 
+  const [isReload, setReload] = useState(false);
+
   useEffect(() => {
     const fetchBook = async () => {
       const response = await getBookById("5f9d90741445af2e1c3c5aa8");
@@ -28,13 +30,13 @@ export const BookInfo = (props: Props) => {
     };
 
     fetchBook();
-  }, []);
+  }, [isReload]);
 
   return (
     <div>
       <NavigationBar />
       <Details book={book}/>
-      <DescriptionNReviews book={book}/>
+      <DescriptionNReviews book={book} reload={() => setReload(!isReload)}/>
     </div>
   );
 };

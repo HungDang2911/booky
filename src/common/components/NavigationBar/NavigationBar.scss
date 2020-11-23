@@ -1,21 +1,44 @@
 .navbar {
-  min-height:100px;
+  min-height: 100px;
   text-transform: uppercase;
 
   &-brand {
     font-size: 40px;
   }
-
 }
 
 .nav-link {
   font-weight: 600;
   color: black !important;
-  
-  transition: .3s;
+
+  transition: 0.3s;
 
   &:hover {
-    color: red !important;
-    border-bottom: 2px solid red;
+    color: #de3241 !important;
+  }
+}
+
+.navbar {
+  &__cart-count {
+    top: 0;
+    left: 23px;
+
+    width: 20px;
+    height: 20px;
+    background-color: #de3241;
+    color: #fff;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+  }
+
+  &__search-input {
+    width: 0;
+    transition: 0.5s;
+
+    &--active {
+      width: 100px;
+      transition: 0.5s;
+    }
   }
 }
