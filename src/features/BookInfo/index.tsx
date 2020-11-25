@@ -5,10 +5,12 @@ import { Details } from './Details/Details';
 import { BookDetail } from '../../models/BookDetail';
 import { getBookById } from '../../api/bookAPI';
 import { DescriptionNReviews } from './DescriptionNReviews/DescriptionNReviews';
+import { useParams } from 'react-router-dom';
 
 interface Props {}
 
 export const BookInfo = (props: Props) => {
+  const { id } = useParams<{id: string}>();
   const [book, setBook] = useState<BookDetail>({
     _id: "",
     imgLink: "",
@@ -25,7 +27,8 @@ export const BookInfo = (props: Props) => {
 
   useEffect(() => {
     const fetchBook = async () => {
-      const response = await getBookById("5f9d90741445af2e1c3c5aa8");
+      console.log(id);
+      const response = await getBookById(id);
       setBook(response.data);
     };
 

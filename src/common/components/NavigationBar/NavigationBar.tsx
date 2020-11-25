@@ -44,11 +44,7 @@ export const NavigationBar = (props: Props) => {
   const [query, setQuery] = useState('');
   const [searchQuery, setSearchQuery] = useState({});
   const [dataList, setDataList] = useState<Book[]>([
-    mockBook,
-    mockBook,
-    mockBook,
-    mockBook,
-    mockBook,
+    mockBook
   ]);
 
   // const search = _.debounce(sendQuery, 300);
@@ -134,7 +130,7 @@ export const NavigationBar = (props: Props) => {
               >
                 {dataList.map((book) => {
                   return (
-                    <Link to={`/books/${book._id}`}>
+                    <Link to={`/books/${book._id}`} key={book.name} className="text-decoration-none">
                       <li className="d-flex navbar__search-result-list__item p-2">
                         <div className="navbar__search-result-list__item__img-wrapper">
                           <img

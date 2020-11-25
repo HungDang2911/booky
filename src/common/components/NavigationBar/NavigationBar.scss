@@ -55,9 +55,11 @@
     &__item {
       color: black;
       text-decoration: none;
+      transition: .2s;
 
       &:hover {
-        text-decoration: none;
+        background-color: #de3241;
+        color: #fff;
       }
 
       &__img-wrapper {
