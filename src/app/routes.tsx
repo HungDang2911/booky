@@ -7,7 +7,7 @@ export const Routes = () => {
   return (
     <BrowserRouter>
       <Route path="/" exact component={BookInfo} />
-      <Route path="/books" component={HomePage} />
+      <Route path="/books" exact component={HomePage} />
     </BrowserRouter>
   );
 };

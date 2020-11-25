@@ -1,24 +1,29 @@
-import axios from "axios";
+import axios from 'axios';
 
-
-axios.interceptors.request.use((config) => {
-  //Request headers
-  config.headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
+axios.interceptors.request.use(
+  (config) => {
+    //Request headers
+    config.headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-})
+);
 
-axios.interceptors.response.use((response) => {
-  return response;
-}, (error) => {
-  //Handle response errors
-  if (error.response.status === 401) window.location.href = "LOGIN_ROUTE" 
-  return Promise.reject(error);
-})
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    //Handle response errors
+    if (error.response.status === 401) window.location.href = 'LOGIN_ROUTE';
+    return Promise.reject(error);
+  }
+);
 
 export class Api {
   private static getFullUrl(url: string) {
@@ -37,7 +42,7 @@ export class Api {
     return axios.patch(Api.getFullUrl(url), JSON.stringify(data));
   }
 
-  static get(url: string) {
+  static get(url: string, data: any = {}) {
     return axios.get(Api.getFullUrl(url));
   }
 
