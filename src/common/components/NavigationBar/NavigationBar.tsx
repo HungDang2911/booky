@@ -24,10 +24,10 @@ interface Props {}
 // eslint-disable-next-line no-redeclare
 export const NavigationBar = (props: Props) => {
   const mockBook: Book = {
-    _id: '',
+    _id: '5f9d90741445af2e1c3c5aa8',
     imgLink:
-      'https://images-na.ssl-images-amazon.com/images/I/51X7dEUFgoL._AC_SY400_.jpg',
-    name: 'How to win friends & influence people',
+      'https://images-na.ssl-images-amazon.com/images/I/41DXJAP4E5L._SX290_BO1,204,203,200_.jpg',
+    name: 'Men are from Mars, women are from Venus',
     price: 0,
     author: 'Dale Carnegie',
     rating: 5.0,

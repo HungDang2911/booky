@@ -1,0 +1,42 @@
+.stay-in-touch {
+  background-color: #de3241;
+
+  & h2 {
+    color: #fff;
+  }
+
+  & hr {
+    border: 0;
+    border-top: 1px solid #fff;
+  }
+
+  &__sign-up {
+    height: 50px;
+    width: 40vw;
+    min-width: 300px;
+    margin: 0 auto;
+
+    &__input {
+      height: 100%;
+      width: 70%;
+      padding: 10px;
+    }
+
+    &__btn {
+      width: 30%;
+      height: 100%;
+      background-color: #000;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 630px) {
+  .stay-in-touch {
+    &__sign-up {
+      font-size: 13px;
+    }
+  }
+}
