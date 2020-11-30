@@ -5,18 +5,18 @@ import { PickedByReaders } from './PickedByReaders/PickedByReaders';
 import { NavigationBar } from '../../common/components/NavigationBar/NavigationBar';
 import { Intro } from './Intro/Intro';
 import { StayInTouch } from './StayInTouch/StayInTouch';
-
+import { BestNNew } from './BestNNew/BestNNew';
 
 interface Props {}
 
 export const HomePage = (props: Props) => {
   return (
     <div>
-      <NavigationBar />
       <Intro />
       <Discover />
       <StayInTouch />
       <PickedByReaders />
+      <BestNNew />
     </div>
   );
 };

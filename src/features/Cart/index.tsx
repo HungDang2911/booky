@@ -4,7 +4,7 @@ import { Container } from 'reactstrap';
 
 interface Props {}
 
-export const Book = (props: Props) => {
+export const Cart = (props: Props) => {
   return (
     <Container>
     </Container>

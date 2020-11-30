@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -8,44 +8,44 @@ import {
   NavItem,
   NavLink,
   Container,
-} from 'reactstrap';
-import './NavigationBar.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../app/rootReducer';
-import _ from 'lodash';
-import { searchItem } from '../../../api/searchAPI';
-import { Book } from '../../../models/Book';
-import { Link } from 'react-router-dom';
+} from "reactstrap";
+import "./NavigationBar.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/rootReducer";
+import _ from "lodash";
+import { searchItem } from "../../../api/searchAPI";
+import { Book } from "../../../models/Book";
+import { Link } from "react-router-dom";
 
 interface Props {}
 
 // eslint-disable-next-line no-redeclare
 export const NavigationBar = (props: Props) => {
   const mockBook: Book = {
-    _id: '5f9d90741445af2e1c3c5aa8',
+    _id: "5f9d90741445af2e1c3c5aa8",
     imgLink:
-      'https://images-na.ssl-images-amazon.com/images/I/41DXJAP4E5L._SX290_BO1,204,203,200_.jpg',
-    name: 'Men are from Mars, women are from Venus',
+      "https://images-na.ssl-images-amazon.com/images/I/41DXJAP4E5L._SX290_BO1,204,203,200_.jpg",
+    name: "Men are from Mars, women are from Venus",
     price: 0,
-    author: 'Dale Carnegie',
+    author: "Dale Carnegie",
     rating: 5.0,
     reviews: 0,
   };
 
+  //Bootstrap navbar state
   const [collapsed, setCollapsed] = useState(true);
 
+  //Navbar state
   const [isSearching, setSearching] = useState(false);
   const [isViewingCart, setViewingCart] = useState(false);
 
   const cart = useSelector((state: RootState) => state.cart.books);
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState({});
-  const [dataList, setDataList] = useState<Book[]>([
-    mockBook
-  ]);
+  const [dataList, setDataList] = useState<Book[]>([mockBook]);
 
   // const search = _.debounce(sendQuery, 300);
 
@@ -118,6 +118,51 @@ export const NavigationBar = (props: Props) => {
               <div className="position-absolute navbar__cart-count">
                 {cart.length}
               </div>
+              <ul
+                className={`${
+                  isViewingCart ? "" : "d-none"
+                } position-absolute navbar__cart-list p-0`}
+              >
+                {dataList.map((book) => {
+                  return (
+                    <Link
+                      to={`/books/${book._id}`}
+                      key={book.name}
+                      className="text-decoration-none"
+                    >
+                      <li className="d-flex navbar__cart-list__item p-2">
+                        <div className="navbar__cart-list__item__img-wrapper">
+                          <img
+                            className="navbar__cart-list__item__img"
+                            src={book.imgLink}
+                            alt={book.name}
+                          />
+                        </div>
+                        <div className="navbar__cart-list__item__detail pl-3">
+                          <p className="navbar__cart-list__item__detail__name playfair font-weight-bold grey-text mb-0">
+                            {book.name}
+                          </p>
+                        </div>
+                      </li>
+                    </Link>
+                  );
+                })}
+                <li className="text-right p-4">
+                  <p className="navbar__cart-list__subtotal font-we">
+                    Subtotal: $
+                    <span>
+                      {cart.reduce(
+                        (acc, bookInCart) =>
+                          acc + bookInCart.numOfBooks * bookInCart.price,
+                        0
+                      )}
+                    </span>
+                  </p>
+                  <button className="navbar__cart-list__view-cart-btn font-weight-bold">
+                    VIEW CART
+                  </button>
+                </li>
+              </ul>
             </NavItem>
             <NavItem className="position-relative" onClick={handleSearchClick}>
               <NavLink href="#">
@@ -125,12 +170,16 @@ export const NavigationBar = (props: Props) => {
               </NavLink>
               <ul
                 className={`${
-                  isSearching ? '' : 'd-none'
+                  isSearching ? "" : "d-none"
                 } position-absolute navbar__search-result-list p-0`}
               >
                 {dataList.map((book) => {
                   return (
-                    <Link to={`/books/${book._id}`} key={book.name} className="text-decoration-none">
+                    <Link
+                      to={`/books/${book._id}`}
+                      key={book.name}
+                      className="text-decoration-none"
+                    >
                       <li className="d-flex navbar__search-result-list__item p-2">
                         <div className="navbar__search-result-list__item__img-wrapper">
                           <img
@@ -155,8 +204,8 @@ export const NavigationBar = (props: Props) => {
               <input
                 className={
                   isSearching
-                    ? 'navbar__search-input--active'
-                    : 'navbar__search-input'
+                    ? "navbar__search-input--active"
+                    : "navbar__search-input"
                 }
                 placeholder="Search"
               />

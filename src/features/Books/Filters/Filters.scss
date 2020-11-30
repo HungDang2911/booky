@@ -1,0 +1,12 @@
+.filters {
+  width: 250px;
+
+  & h4 {
+    height: 50px;
+    padding: 0 30px;
+    background-color: #de3241;
+    line-height: 50px;
+    font-size: 17px;
+    color: #fff;
+  }
+}

@@ -37,7 +37,6 @@ export const BookInfo = (props: Props) => {
 
   return (
     <div>
-      <NavigationBar />
       <Details book={book}/>
       <DescriptionNReviews book={book} reload={() => setReload(!isReload)}/>
     </div>

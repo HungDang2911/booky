@@ -1,0 +1,24 @@
+.footer {
+  background-color: #ccc;
+
+  &__info {
+    &__social {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto;
+      background-color: #de3241;
+      border-radius: 100%;
+      color: #fff;
+
+      &__facebook,
+      &__facebook:hover {
+        color: #fff;
+      }
+    }
+
+    width: 300px;
+    margin: 0 auto;
+    &__detail {
+    }
+  }
+}
