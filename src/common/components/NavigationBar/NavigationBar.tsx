@@ -11,29 +11,23 @@ import {
 } from "reactstrap";
 import "./NavigationBar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
+import {
+  faSearch,
+  faShoppingCart,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/rootReducer";
 import _ from "lodash";
-import { searchItem } from "../../../api/searchAPI";
+import { searchBook } from "../../../api/searchAPI";
 import { Book } from "../../../models/Book";
 import { Link } from "react-router-dom";
+import { removeBook } from "../../../features/Cart/cartSlice";
 
 interface Props {}
 
 // eslint-disable-next-line no-redeclare
 export const NavigationBar = (props: Props) => {
-  const mockBook: Book = {
-    _id: "5f9d90741445af2e1c3c5aa8",
-    imgLink:
-      "https://images-na.ssl-images-amazon.com/images/I/41DXJAP4E5L._SX290_BO1,204,203,200_.jpg",
-    name: "Men are from Mars, women are from Venus",
-    price: 0,
-    author: "Dale Carnegie",
-    rating: 5.0,
-    reviews: 0,
-  };
-
   //Bootstrap navbar state
   const [collapsed, setCollapsed] = useState(true);
 
@@ -45,9 +39,12 @@ export const NavigationBar = (props: Props) => {
 
   const [query, setQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState({});
-  const [dataList, setDataList] = useState<Book[]>([mockBook]);
+  const [dataList, setDataList] = useState<Book[]>([]);
 
   // const search = _.debounce(sendQuery, 300);
+
+  //dispatcher
+  const dispatch = useDispatch();
 
   const handleCartClick = () => {
     setViewingCart(!isViewingCart);
@@ -58,6 +55,15 @@ export const NavigationBar = (props: Props) => {
   };
 
   const toggleNavbar = () => setCollapsed(!collapsed);
+
+  const search = _.debounce((query) => {
+    searchBook(query);
+  }, 1000);
+
+  const onSearchChange = (event: any) => {
+    const queryString = event.target.value;
+    search(queryString);
+  };
 
   // const onChange = ({ target: { value } }) => {
   //   setQuery(value);
@@ -123,28 +129,38 @@ export const NavigationBar = (props: Props) => {
                   isViewingCart ? "" : "d-none"
                 } position-absolute navbar__cart-list p-0`}
               >
-                {dataList.map((book) => {
+                {cart.map((book) => {
                   return (
-                    <Link
-                      to={`/books/${book._id}`}
-                      key={book.name}
-                      className="text-decoration-none"
-                    >
-                      <li className="d-flex navbar__cart-list__item p-2">
-                        <div className="navbar__cart-list__item__img-wrapper">
-                          <img
-                            className="navbar__cart-list__item__img"
-                            src={book.imgLink}
-                            alt={book.name}
-                          />
-                        </div>
-                        <div className="navbar__cart-list__item__detail pl-3">
-                          <p className="navbar__cart-list__item__detail__name playfair font-weight-bold grey-text mb-0">
-                            {book.name}
-                          </p>
-                        </div>
-                      </li>
-                    </Link>
+                    <>
+                      <Link
+                        to={`/books/${book._id}`}
+                        key={book.name}
+                        className="text-decoration-none"
+                      >
+                        <li className="d-flex navbar__cart-list__item p-2 position-relative">
+                          <div className="navbar__cart-list__item__img-wrapper">
+                            <img
+                              className="navbar__cart-list__item__img"
+                              src={book.imgLink}
+                              alt={book.name}
+                            />
+                          </div>
+                          <div className="navbar__cart-list__item__detail pl-3">
+                            <p className="navbar__cart-list__item__detail__name playfair font-weight-bold grey-text mb-0">
+                              {book.name}
+                            </p>
+                          </div>
+                          <div
+                            className="position-absolute navbar__cart-list__item__delete-btn text-center"
+                            onClick={() => {
+                              dispatch(removeBook(book));
+                            }}
+                          >
+                            <FontAwesomeIcon icon={faTimes} />
+                          </div>
+                        </li>
+                      </Link>
+                    </>
                   );
                 })}
                 <li className="text-right p-4">
@@ -208,6 +224,7 @@ export const NavigationBar = (props: Props) => {
                     : "navbar__search-input"
                 }
                 placeholder="Search"
+                onChange={onSearchChange}
               />
             </NavItem>
           </Nav>

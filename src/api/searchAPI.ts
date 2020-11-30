@@ -1,5 +1,5 @@
 import { Api } from '.';
 
-export const searchItem = (value: string) => {
+export const searchBook = (value: string) => {
   return Api.post('/search', value);
 }

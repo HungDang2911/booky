@@ -20,6 +20,7 @@ axios.interceptors.response.use(
   },
   (error) => {
     //Handle response errors
+    console.log(error)
     if (error.response.status === 401) window.location.href = 'LOGIN_ROUTE';
     return Promise.reject(error);
   }

@@ -1,32 +1,46 @@
 /* eslint-disable no-restricted-globals */
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Container } from 'reactstrap';
-import { BookDetail } from '../../../models/BookDetail';
-import './BestNNew.scss';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Container } from "reactstrap";
+import { getFourBooks, getOneBook } from "../../../api/bookAPI";
+import { BookDetail } from "../../../models/BookDetail";
+import "./BestNNew.scss";
 
 interface Props {}
 
 export const BestNNew = (props: Props) => {
-  const mockBook: BookDetail = {
-    _id: 'dfkjasjkdfas',
-    imgLink:
-      'https://images-na.ssl-images-amazon.com/images/I/51X7dEUFgoL._AC_SY400_.jpg',
-    name: 'How to win friends & influence people',
-    price: 6.33,
-    author: 'Dale Carnegie',
-    rating: 5.0,
+  const [bestSeller, setBestSeller] = useState<BookDetail>({
+    _id: "",
+    imgLink: "",
+    name: "",
     categories: [],
-    description: 'dkajsdkjd kalsjdlfkasd lkasjdlfkad lkdlfaksdl asdfasd asdfa',
+    price: -1,
+    author: {
+      _id: "",
+      name: "",
+      latestBook: [],
+      description: ""
+    },
+    description: "",
+    rating: 0,
     reviews: [],
-  };
-  const [bestSeller, setBestSeller] = useState<BookDetail>(mockBook);
-  const [newBooks, setNewBooks] = useState<BookDetail[]>([
-    mockBook,
-    mockBook,
-    mockBook,
-    mockBook,
-  ]);
+  });
+  const [newBooks, setNewBooks] = useState<BookDetail[]>([]);
+
+  useEffect(() => {
+    const fetchBestSeller = async () => {
+      const response = await getOneBook();
+      setBestSeller(response.data[0]);
+    }
+
+    const fetchNewBooks = async () => {
+      const response = await getFourBooks();
+      setNewBooks(response.data);
+    }
+
+    fetchBestSeller();
+    fetchNewBooks();
+  }, [])
 
   const handleMoreInfoBtn = () => {
     location.href = `/books/${bestSeller._id}`;
@@ -52,7 +66,7 @@ export const BestNNew = (props: Props) => {
             </h3>
             <p>
               <span className="red-text font-weight-bold">Author: </span>
-              <span className="grey-text">{bestSeller.author}</span>
+              <span className="grey-text">{bestSeller.author.name}</span>
             </p>
             <p className="grey-text best-n-new__best__info__description">
               {bestSeller.description}
@@ -78,7 +92,10 @@ export const BestNNew = (props: Props) => {
         <div className="best-n-new__new__books-list">
           {newBooks.map((book) => {
             return (
-              <div className="best-n-new__new__books-list__book d-flex my-4 position-relative">
+              <div
+                key={"news" + book._id}
+                className="best-n-new__new__books-list__book d-flex my-4 position-relative"
+              >
                 <div className="best-n-new__new__books-list__book__img-wrapper">
                   <Link to={`/books/${book._id}`}>
                     <img

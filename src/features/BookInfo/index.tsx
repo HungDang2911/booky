@@ -17,7 +17,12 @@ export const BookInfo = (props: Props) => {
     name: "",
     categories: [],
     price: -1,
-    author: "",
+    author: {
+      _id: "",
+      name: "",
+      latestBook: [],
+      description: ""
+    },
     description: "",
     rating: 0,
     reviews: [],

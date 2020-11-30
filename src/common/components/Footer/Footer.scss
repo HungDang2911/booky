@@ -1,23 +1,27 @@
 .footer {
-  background-color: #ccc;
+  background-color: #ddd;
+  padding-top: 30px;
+  padding-bottom: 10px;
 
   &__info {
-    &__social {
-      width: 50px;
-      height: 50px;
-      margin: 0 auto;
-      background-color: #de3241;
-      border-radius: 100%;
-      color: #fff;
+    width: 300px;
 
-      &__facebook,
-      &__facebook:hover {
+    &__social {
+      & a {
+        width: 50px;
+        height: 50px;
+        margin: 0 10px;
+        background-color: #de3241;
+        border-radius: 100%;
         color: #fff;
+
+        &:hover {
+          background-color: #b52733;
+          color: #fff;
+        }
       }
     }
 
-    width: 300px;
-    margin: 0 auto;
     &__detail {
     }
   }
