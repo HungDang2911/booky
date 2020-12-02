@@ -4,6 +4,7 @@ import { Footer } from "../common/components/Footer/Footer";
 import { NavigationBar } from "../common/components/NavigationBar/NavigationBar";
 import { BookInfo } from "../features/BookInfo";
 import { Books } from "../features/Books";
+import { Cart } from "../features/Cart";
 import { HomePage } from "../features/Homepage";
 
 export const Routes = () => {
@@ -13,6 +14,7 @@ export const Routes = () => {
       <Route path="/" exact component={HomePage} />
       <Route exact path="/books" component={Books} />
       <Route exact path="/books/:id" component={BookInfo} />
+      <Route exact path="/cart" component={Cart} />
       <Route path="/" component={Footer} />
     </BrowserRouter>
   );

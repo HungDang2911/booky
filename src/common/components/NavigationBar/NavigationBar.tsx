@@ -19,10 +19,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/rootReducer";
 import _ from "lodash";
-import { searchBook } from "../../../api/searchAPI";
 import { Book } from "../../../models/Book";
 import { Link } from "react-router-dom";
 import { removeBook } from "../../../features/Cart/cartSlice";
+import { searchBook } from "../../../api/bookAPI";
 
 interface Props {}
 
@@ -35,13 +35,11 @@ export const NavigationBar = (props: Props) => {
   const [isSearching, setSearching] = useState(false);
   const [isViewingCart, setViewingCart] = useState(false);
 
-  const cart = useSelector((state: RootState) => state.cart.books);
+  const cart = useSelector((state: RootState) => state.cart);
 
   const [query, setQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState({});
   const [dataList, setDataList] = useState<Book[]>([]);
-
-  // const search = _.debounce(sendQuery, 300);
 
   //dispatcher
   const dispatch = useDispatch();
@@ -56,40 +54,14 @@ export const NavigationBar = (props: Props) => {
 
   const toggleNavbar = () => setCollapsed(!collapsed);
 
-  const search = _.debounce((query) => {
-    searchBook(query);
+  const search = _.debounce(async (query) => {
+    const response = await searchBook(query);
   }, 1000);
 
   const onSearchChange = (event: any) => {
     const queryString = event.target.value;
     search(queryString);
   };
-
-  // const onChange = ({ target: { value } }) => {
-  //   setQuery(value);
-
-  //   const search = _.debounce(sendQuery, 300);
-
-  //   setSearchQuery(prevSearch => {
-  //     if (prevSearch.cancel) {
-  //       prevSearch.cancel();
-  //     }
-  //     return search;
-  //   });
-
-  //   search(value);
-  // };
-
-  /**
-   * In charge to send the value
-   * to the API.
-   * @param {*} value
-   */
-  // const sendQuery = async (value: any) => {
-  //   const { cancelPrevQuery, result } = await searchItem(value);
-
-  //   if (cancelPrevQuery) return;
-  // };
 
   return (
     <Container>
@@ -122,14 +94,14 @@ export const NavigationBar = (props: Props) => {
                 <FontAwesomeIcon icon={faShoppingCart} />
               </NavLink>
               <div className="position-absolute navbar__cart-count">
-                {cart.length}
+                {cart.books.length}
               </div>
               <ul
                 className={`${
                   isViewingCart ? "" : "d-none"
                 } position-absolute navbar__cart-list p-0`}
               >
-                {cart.map((book) => {
+                {cart.books.map((book) => {
                   return (
                     <>
                       <Link
@@ -165,18 +137,13 @@ export const NavigationBar = (props: Props) => {
                 })}
                 <li className="text-right p-4">
                   <p className="navbar__cart-list__subtotal font-we">
-                    Subtotal: $
-                    <span>
-                      {cart.reduce(
-                        (acc, bookInCart) =>
-                          acc + bookInCart.numOfBooks * bookInCart.price,
-                        0
-                      )}
-                    </span>
+                    Subtotal: $<span>{cart.subtotal}</span>
                   </p>
-                  <button className="navbar__cart-list__view-cart-btn font-weight-bold">
-                    VIEW CART
-                  </button>
+                  <Link to="/cart">
+                    <button className="navbar__cart-list__view-cart-btn font-weight-bold">
+                      VIEW CART
+                    </button>
+                  </Link>
                 </li>
               </ul>
             </NavItem>

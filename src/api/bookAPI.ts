@@ -8,6 +8,18 @@ export const createReview = (id: string, review: any) => {
   return Api.post(`/books/${id}/reviews`, review);
 };
 
+export const searchBook = (name: string) => {
+  return Api.post(
+    `/books/search`,
+    {},
+    {
+      params: {
+        name,
+      },
+    }
+  );
+};
+
 export const getOneBook = () => {
   return Api.get("/books/random/one-book");
 };

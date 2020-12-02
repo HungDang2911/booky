@@ -19,7 +19,7 @@ export const BestNNew = (props: Props) => {
       _id: "",
       name: "",
       latestBook: [],
-      description: ""
+      description: "",
     },
     description: "",
     rating: 0,
@@ -30,17 +30,17 @@ export const BestNNew = (props: Props) => {
   useEffect(() => {
     const fetchBestSeller = async () => {
       const response = await getOneBook();
-      setBestSeller(response.data[0]);
-    }
+      setBestSeller(response.data);
+    };
 
     const fetchNewBooks = async () => {
       const response = await getFourBooks();
       setNewBooks(response.data);
-    }
+    };
 
     fetchBestSeller();
     fetchNewBooks();
-  }, [])
+  }, []);
 
   const handleMoreInfoBtn = () => {
     location.href = `/books/${bestSeller._id}`;

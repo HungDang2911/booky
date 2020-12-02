@@ -31,8 +31,8 @@ export class Api {
     return process.env.REACT_APP_API_URL + url;
   }
 
-  static post(url: string, data: any = {}) {
-    return axios.post(Api.getFullUrl(url), JSON.stringify(data));
+  static post(url: string, data: any = {}, config: any = {}) {
+    return axios.post(Api.getFullUrl(url), JSON.stringify(data), config);
   }
 
   static put(url: string, data: any = {}) {

@@ -17,7 +17,6 @@ export const PickedByReaders = (props: Props) => {
   useEffect(() => {
     const fetchBooks = async () => {
       const response = await getSixBooks();
-      console.log(response.data);
       setBooks(response.data);
     };
 
