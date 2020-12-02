@@ -37,8 +37,7 @@ export const NavigationBar = (props: Props) => {
 
   const cart = useSelector((state: RootState) => state.cart);
 
-  const [query, setQuery] = useState("");
-  const [searchQuery, setSearchQuery] = useState({});
+  //search results
   const [dataList, setDataList] = useState<Book[]>([]);
 
   //dispatcher
@@ -50,12 +49,15 @@ export const NavigationBar = (props: Props) => {
 
   const handleSearchClick = () => {
     setSearching(!isSearching);
+    setDataList([]);
   };
 
   const toggleNavbar = () => setCollapsed(!collapsed);
 
   const search = _.debounce(async (query) => {
     const response = await searchBook(query);
+    setDataList(response.data);
+    console.log(response.data);
   }, 1000);
 
   const onSearchChange = (event: any) => {
@@ -73,21 +75,28 @@ export const NavigationBar = (props: Props) => {
         <Collapse isOpen={!collapsed} navbar className="justify-content-end">
           <Nav navbar>
             <NavItem>
-              <NavLink href="/components/">Components</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">
-                GitHub
+              <NavLink href="/components/">
+                <Link to="/" className="text-decoration-none">
+                  Home
+                </Link>
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/components/">Components</NavLink>
+              <NavLink href="https://github.com/reactstrap/reactstrap">
+                <Link to="/books" className="text-decoration-none">
+                  BOOKS
+                </Link>
+              </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink href="/components/">Components</NavLink>
+            <NavItem className="d-lg-none">
+              <NavLink href="/components/">
+                <Link to="/cart">
+                  <FontAwesomeIcon icon={faShoppingCart} />
+                </Link>
+              </NavLink>
             </NavItem>
             <NavItem
-              className="position-relative mr-2"
+              className="position-relative mr-2 d-none d-lg-block"
               onClick={handleCartClick}
             >
               <NavLink href="#">
@@ -147,13 +156,16 @@ export const NavigationBar = (props: Props) => {
                 </li>
               </ul>
             </NavItem>
-            <NavItem className="position-relative" onClick={handleSearchClick}>
+            <NavItem
+              className="position-relative d-none d-md-block"
+              onClick={handleSearchClick}
+            >
               <NavLink href="#">
                 <FontAwesomeIcon icon={faSearch} />
               </NavLink>
               <ul
                 className={`${
-                  isSearching ? "" : "d-none"
+                  dataList.length ? "" : "d-none"
                 } position-absolute navbar__search-result-list p-0`}
               >
                 {dataList.map((book) => {
@@ -175,7 +187,7 @@ export const NavigationBar = (props: Props) => {
                           <p className="navbar__search-result-list__item__detail__name mb-0">
                             {book.name}
                           </p>
-                          <p>{book.author}</p>
+                          <p className="grey-text">{book.author.name}</p>
                         </div>
                       </li>
                     </Link>

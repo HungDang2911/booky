@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import Rating from 'react-rating';
-import { Container } from 'reactstrap';
-import { BookDetail } from '../../../models/BookDetail';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './DescriptionNReviews.scss';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
-import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
+import React, { useState } from "react";
+import Rating from "react-rating";
+import { Container } from "reactstrap";
+import { BookDetail } from "../../../models/BookDetail";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./DescriptionNReviews.scss";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { createReview } from "../../../api/bookAPI";
 
 export interface Props {
   book: BookDetail;
@@ -15,8 +16,8 @@ export interface Props {
 }
 
 const SCREENS = {
-  DESCRIPTION: 'DESCRIPTION',
-  REVIEWS: 'REVIEWS',
+  DESCRIPTION: "DESCRIPTION",
+  REVIEWS: "REVIEWS",
 };
 
 export function DescriptionNReviews(props: Props) {
@@ -26,10 +27,10 @@ export function DescriptionNReviews(props: Props) {
 
   //initial form values
   const initialFormValues = {
-    review: '',
+    review: "",
     rating: 0,
-    name: '',
-    email: '',
+    name: "",
+    email: "",
   };
 
   //validation schema
@@ -38,11 +39,15 @@ export function DescriptionNReviews(props: Props) {
     review: Yup.string(),
     rating: Yup.number(),
     name: Yup.string(),
-    email: Yup.string()
+    email: Yup.string(),
   });
 
-  const handleSubmit = (values: any) => {
-    console.log(values)
+  const handleRatingChange = (values: any) => {
+    setRating(values);
+  }
+
+  const handleSubmit = async (values: any) => {
+    await createReview(props.book._id, {...values, rating: rating})
     props.reload();
   };
 
@@ -53,8 +58,8 @@ export function DescriptionNReviews(props: Props) {
           <button
             className={`playfair ${
               currentScreen === SCREENS.DESCRIPTION
-                ? 'description-n-reviews__switch-btn-group__active-btn'
-                : 'description-n-reviews__switch-btn-group__not-active-btn'
+                ? "description-n-reviews__switch-btn-group__active-btn"
+                : "description-n-reviews__switch-btn-group__not-active-btn"
             }`}
             onClick={() => setCurrentScreen(SCREENS.DESCRIPTION)}
           >
@@ -63,8 +68,8 @@ export function DescriptionNReviews(props: Props) {
           <button
             className={`playfair ${
               currentScreen === SCREENS.REVIEWS
-                ? 'description-n-reviews__switch-btn-group__active-btn'
-                : 'description-n-reviews__switch-btn-group__not-active-btn'
+                ? "description-n-reviews__switch-btn-group__active-btn"
+                : "description-n-reviews__switch-btn-group__not-active-btn"
             }`}
             onClick={() => setCurrentScreen(SCREENS.REVIEWS)}
           >
@@ -79,6 +84,23 @@ export function DescriptionNReviews(props: Props) {
         ) : (
           <div className="description-n-reviews__reviews pb-2 pt-4 px-4 pt-md-5 px-md-5">
             <h3 className="playfair">Reviews</h3>
+            {props.book.reviews.map((review) => {
+              return (
+                <div className="d-flex description-n-reviews__reviews__item my-3">
+                  <div className="d-flex description-n-reviews__reviews__item__img-wrapper">
+                    <img
+                      src="https://iupac.org/wp-content/uploads/2018/05/default-avatar.png"
+                      alt="avatar"
+                      className="d-flex description-n-reviews__reviews__item__img"
+                    />
+                  </div>
+                  <div className="pl-3">
+                    <p className="font-weight-bold">{review.name}</p>
+                    <p>{review.review}</p>
+                  </div>
+                </div>
+              );
+            })}
             {!props.book.reviews.length ? (
               <div>
                 <p>There are no reviews yet.</p>
@@ -107,6 +129,7 @@ export function DescriptionNReviews(props: Props) {
                           className="description-n-reviews__reviews__rating"
                           emptySymbol={<FontAwesomeIcon icon={farStar} />}
                           fullSymbol={<FontAwesomeIcon icon={faStar} />}
+                          onChange={handleRatingChange}
                         />
                       )}
                     </Field>
@@ -147,7 +170,7 @@ export function DescriptionNReviews(props: Props) {
                       </button>
                     </div>
                   </Form>
-                )
+                );
               }}
             </Formik>
           </div>

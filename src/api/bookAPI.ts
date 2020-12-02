@@ -5,7 +5,7 @@ export const getBookById = (id: String): any => {
 };
 
 export const createReview = (id: string, review: any) => {
-  return Api.post(`/books/${id}/reviews`, review);
+  return Api.post(`/books/${id}/review`, review);
 };
 
 export const searchBook = (name: string) => {

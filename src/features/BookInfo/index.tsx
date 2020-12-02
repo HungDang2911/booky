@@ -40,7 +40,7 @@ export const BookInfo = (props: Props) => {
   }, [isReload]);
 
   return (
-    <div>
+    <div className="my-5">
       <Details book={book} />
       <DescriptionNReviews book={book} reload={() => setReload(!isReload)} />
     </div>

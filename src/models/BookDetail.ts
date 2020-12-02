@@ -1,4 +1,5 @@
 import { Author } from "./Author";
+import { Review } from "./Review";
 
 export interface BookDetail {
   _id: string;
@@ -9,5 +10,5 @@ export interface BookDetail {
   author: Author;
   description: string;
   rating: number;
-  reviews: [];
+  reviews: Review[];
 }

@@ -31,7 +31,10 @@ export const PickedByReaders = (props: Props) => {
       <hr className="homepage__header__underline" />
       <div className="row">
         {books.map((book) => (
-          <div className="picked-by-readers__book-card col-12 col-sm-6 col-md-2 text-center px-2">
+          <div
+            key={"book-card-" + book._id}
+            className="picked-by-readers__book-card col-12 col-sm-6 col-md-2 text-center px-2"
+          >
             <div className="picked-by-readers__book-card__img-wrapper position-relative">
               <Link to={`/books/${book._id}`}>
                 <img
